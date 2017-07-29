@@ -27,6 +27,6 @@ module.exports = {
     publicPath: '/',
     contentBase: path.join(__dirname, "./src/static"),
     compress: true,
-    port: 9000
+    port: 9090
   },
 };

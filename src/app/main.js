@@ -1,12 +1,13 @@
-import React from 'react'
-import { PureComponent } from 'react'
-
-import { createStore, applyMiddleware } from 'redux'
+import React, { PureComponent } from 'react'
+import { Switch, Route } from 'react-router-dom'
+import LoginContainer from './login/containers/LoginContainer'
 
 export default class App extends PureComponent {
   render() {
     return (
-      <h1>Hello, asddasd@</h1>
+      <Switch>
+        <Route to='/login' component={ LoginContainer }/>
+      </Switch>
     )
   }
 }
