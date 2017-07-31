@@ -6,22 +6,15 @@ import {loginSuccess, loginError} from './loginActions'
 
 function* authorize(username, password) {
   try {
-    console.log('autorize');
-
     const response = yield call(api.login, username, password);
+    const token = response.data.token;
 
-    console.log(response);
-
-    if (response.status === 200) {
-      const {token} = response;
-
-      localStorage.setItem('token', token);
-      yield put(loginSuccess(token));
-    }
+    localStorage.setItem('token', token);
+    yield put(loginSuccess(token));
   } catch (error) {
-    const errMessage = typeof error === 'string'
-      ? error
-      : 'Could not connect to server. Please try later.';
+    const errMessage = error.response === undefined
+      ? 'Could not connect to server. Please try later.'
+      : error.response.data.error;
 
     yield put(loginError(errMessage))
   }

@@ -1,18 +1,15 @@
 import fetch from 'isomorphic-fetch'
 import axios from 'axios'
 
+//TODO: Разобраться с возвращением ошибок
+
 export function login(username, password) {
-  return axios('http://localhost:3030/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      username,
-      password
-    })
+  return axios.post('http://localhost:3030/login', {
+    username,
+    password
   }).then(res => {
-    return res.token
+    console.log('resolve');
+    return res;
   })
 }
 
