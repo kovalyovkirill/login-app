@@ -1,4 +1,4 @@
-import * as at from './loginConstants'
+import * as at from './authConstants'
 
 const initialState = {
   error: '',
@@ -26,6 +26,12 @@ export default function (state = initialState, action) {
         token: action.payload.token,
         error: ''
       });
+    case at.LOGOUT_SUCCESS:
+      return ({
+        ...state,
+        token: ''
+      });
+    case at.LOGOUT:
     default:
       return state
   }

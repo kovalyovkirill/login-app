@@ -1,8 +1,9 @@
 import {fork, call, take, put} from 'redux-saga/effects'
 
-import * as api from './loginApi'
-import * as at from './loginConstants'
-import {loginSuccess, loginError} from './loginActions'
+import * as api from './authApi'
+import * as at from './authConstants'
+import {loginSuccess, loginError, logoutSuccess} from './authActions'
+import {push} from 'react-router-redux'
 
 function* authorize(username, password) {
   try {
@@ -20,12 +21,16 @@ function* authorize(username, password) {
   }
 }
 
-export default function* loginSaga() {
+export default function* authSaga() {
   while (true) {
     const login = yield take(at.LOGIN_REQUEST);
     const {username, password} = login.payload;
 
     yield fork(authorize, username, password);
     yield take([at.LOGOUT, at.LOGIN_ERROR]);
+
+    yield call(api.logout);
+    yield put(push('/'));
+    yield put(logoutSuccess());
   }
 }

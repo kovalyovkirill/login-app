@@ -1,4 +1,4 @@
-import * as at from './loginConstants'
+import * as at from './authConstants'
 
 export function loginRequest(username, password) {
   return ({
@@ -19,7 +19,7 @@ export function loginSuccess(token) {
   })
 }
 
-export function loginError (error) {
+export function loginError(error) {
   return ({
     type: at.LOGIN_ERROR,
     payload: {
@@ -27,3 +27,11 @@ export function loginError (error) {
     }
   })
 }
+
+export function logout() {
+  return ({
+    type: at.LOGOUT
+  })
+}
+
+export const logoutSuccess = () => ({type: at.LOGOUT_SUCCESS});

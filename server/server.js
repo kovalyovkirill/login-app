@@ -20,9 +20,18 @@ router
     if(db.username !== username ||  db.password !== password) {
       response.body = {error: 'Wrong login or password'};
       response.status = 401;
+
+      return;
     }
 
     response.body = {token: 'verySecret'};
+    response.status = 200;
+  });
+
+router
+  .post('/logout', async function (ctx) {
+    const { response } = ctx;
+
     response.status = 200;
   });
 

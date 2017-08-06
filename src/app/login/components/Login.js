@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 
 export default class Login extends PureComponent {
   static propTypes = {
@@ -31,27 +31,37 @@ export default class Login extends PureComponent {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const { doLogin } = this.props;
+    const {doLogin} = this.props;
 
     doLogin(this.state.username, this.state.password)
   };
 
   render() {
-    const { error, isLoginPending } = this.props;
+    const {error, isLoginPending} = this.props;
     const token = localStorage.getItem('token');
+    const isInvalid = !this.state.username.trim() || !this.state.password.trim();
+    const styles = {
+      margin: 10,
+      padding: 5
+    };
 
-    return (
-      <div>
-        { token && <Redirect to='/'/> }
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="username">Username: </label>
-          <input type="text" id="username" onChange={this.handleChange} name='username' value={this.state.username}/>
-          <label htmlFor="password">Password: </label>
-          <input id="password" type="password" onChange={this.handleChange} name='password' value={this.state.password}/>
-          <input type="submit"  value={isLoginPending ? 'Login in...' : 'Login' } disabled={ isLoginPending }/>
-          { error && <div>{error}</div> }
-        </form>
-      </div>
-    )
+    return token
+      ?
+      <Redirect to='/dashboard'/>
+      :
+      (
+        <div>
+          <form onSubmit={this.handleSubmit}>
+            <label htmlFor="username">Username: </label>
+            <input style={styles} type="text" id="username" onChange={this.handleChange} name='username' value={this.state.username}/><br/>
+            <label htmlFor="password">Password: </label>
+            <input style={styles} id="password" type="password" onChange={this.handleChange} name='password'
+                   value={this.state.password}/><br/>
+            <input type="submit" value={isLoginPending ? 'Login in...' : 'Login'} disabled={isInvalid || isLoginPending}/>
+            {error && <div>{error}</div>}
+          </form><br/>
+          <div>Type username: test, password: 123 to log in.</div>
+        </div>
+      )
   }
 }
