@@ -27,10 +27,12 @@ export default function* authSaga() {
     const {username, password} = login.payload;
 
     yield fork(authorize, username, password);
-    yield take([at.LOGOUT, at.LOGIN_ERROR]);
+    const action = yield take([at.LOGOUT, at.LOGIN_ERROR]);
 
-    yield call(api.logout);
-    yield put(push('/'));
-    yield put(logoutSuccess());
+    if(action.type === at.LOGOUT) {
+      yield call(api.logout);
+      yield put(push('/'));
+      yield put(logoutSuccess());
+    }
   }
 }

@@ -1,6 +1,8 @@
 import path from 'path'
 import * as webpack from 'webpack'
 
+//TODO: Add build config
+
 module.exports = {
   entry: {
     app: './src/index.js'
